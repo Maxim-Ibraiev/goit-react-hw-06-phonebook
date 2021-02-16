@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuIdv4 } from 'uuid';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/contacts/contactsActions';
 import ButtonSubmit from '../../components/Buttons/ButtonSubmit';
@@ -44,7 +45,7 @@ class ContactForm extends Component {
       }, 2000);
     }
 
-    this.props.onSetContacts(name, number);
+    this.props.onSetContacts({ id: uuIdv4(), name, number });
     this.reset();
   };
 
@@ -80,7 +81,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onSetContacts: actions.items,
+  onSetContacts: actions.addItems,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

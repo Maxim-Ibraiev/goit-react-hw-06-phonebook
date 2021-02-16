@@ -47,7 +47,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSetContacts: arr => dispatch(actions.addItems(arr)),
+  onSetContacts: arr => dispatch(actions.items(arr)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhonebookPage);
