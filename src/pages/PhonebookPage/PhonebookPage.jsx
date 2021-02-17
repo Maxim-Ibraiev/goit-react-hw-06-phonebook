@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/contacts/contactsActions';
 import ContactForm from '../../components/ContactForm';
@@ -8,40 +7,22 @@ import Logo from '../../components/Logo';
 import s from './PhonebookPage.module.scss';
 import { TIMEOUT_LONGER } from '../../const';
 
-class PhonebookPage extends Component {
-  componentDidMount() {
-    const localContacts = JSON.parse(localStorage.getItem('contacts'));
+function PhonebookPage({ contacts }) {
+  return (
+    <div className={s.container}>
+      <Logo appear timeout={TIMEOUT_LONGER} />
 
-    if (localContacts) {
-      this.props.onSetContacts(localContacts);
-    }
-  }
+      <ContactForm />
 
-  componentDidUpdate() {
-    const { contacts } = this.props;
+      <h2>Contacts</h2>
+      {contacts.length > 0 && <Filter isShow={contacts.length > 1} />}
 
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }
-
-  render() {
-    const { contacts } = this.props;
-
-    return (
-      <div className={s.container}>
-        <Logo appear timeout={TIMEOUT_LONGER} />
-
-        <ContactForm />
-
-        <h2>Contacts</h2>
-        {contacts.length > 0 && <Filter isShow={contacts.length > 1} />}
-
-        <ContactList />
-      </div>
-    );
-  }
+      <ContactList />
+    </div>
+  );
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
   contacts: state.contacts.items,
   filter: state.contacts.filter,
 });
